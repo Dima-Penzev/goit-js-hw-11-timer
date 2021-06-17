@@ -19,7 +19,6 @@ class CountdownTimer {
       timerHours.textContent = hours;
       timerMins.textContent = mins;
       timerSecs.textContent = secs;
-      // console.log(`${days}:${hours}:${mins}:${secs}`);
     }, 1000);
   }
 
