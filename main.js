@@ -1,8 +1,3 @@
-const timerDays = document.querySelector('[data-value="days"]');
-const timerHours = document.querySelector('[data-value="hours"]');
-const timerMins = document.querySelector('[data-value="mins"]');
-const timerSecs = document.querySelector('[data-value="secs"]');
-
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.selector = selector;
@@ -11,14 +6,17 @@ class CountdownTimer {
     this.start();
   }
   start() {
+    document
+      .querySelector(this.selector)
+      .insertAdjacentHTML('afterbegin', this.makeTimerMarkup());
     this.intervalId = setInterval(() => {
       const currentDate = Date.now();
       const deltaTime = this.targetDate - currentDate;
       const { days, hours, mins, secs } = this.getTimeComponents(deltaTime);
-      timerDays.textContent = days;
-      timerHours.textContent = hours;
-      timerMins.textContent = mins;
-      timerSecs.textContent = secs;
+      document.querySelector('[data-value="days"]').textContent = days;
+      document.querySelector('[data-value="hours"]').textContent = hours;
+      document.querySelector('[data-value="mins"]').textContent = mins;
+      document.querySelector('[data-value="secs"]').textContent = secs;
     }, 1000);
   }
 
@@ -39,6 +37,28 @@ class CountdownTimer {
 
   padDays(value) {
     return String(value).padStart(3, '0');
+  }
+
+  makeTimerMarkup() {
+    return `<div class="field">
+        <span class="value" data-value="days">00</span>
+        <span class="label">Days</span>
+      </div>
+
+      <div class="field">
+        <span class="value" data-value="hours">00</span>
+        <span class="label">Hours</span>
+      </div>
+
+      <div class="field">
+        <span class="value" data-value="mins">00</span>
+        <span class="label">Minutes</span>
+      </div>
+
+      <div class="field">
+        <span class="value" data-value="secs">00</span>
+        <span class="label">Seconds</span>
+      </div>`;
   }
 }
 
